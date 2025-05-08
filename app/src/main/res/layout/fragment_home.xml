@@ -1,78 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
 
-
-    <!-- Plastic -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Plastic"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <ProgressBar
-        android:id="@+id/plasticProgressBar"
-        style="?android:attr/progressBarStyleHorizontal"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="0" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/plasticPercentageTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0%" />
+        <!-- ========== Plastic Bin ========== -->
+        <TextView
+            android:id="@+id/plasticLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Plastic Bin"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
 
-    <!-- Metal -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Metal"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <ProgressBar
+            android:id="@+id/plasticProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:max="100"
+            android:progressTint="@android:color/holo_blue_dark" />
 
-    <ProgressBar
-        android:id="@+id/metalProgressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="0" />
+        <TextView
+            android:id="@+id/plasticPercentageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0%"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp" />
 
-    <TextView
-        android:id="@+id/metalPercentageTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0%" />
+        <ImageView
+            android:id="@+id/plasticWarningIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_dialog_alert"
+            android:visibility="gone"
+            android:layout_marginTop="4dp"
+            app:tint="@android:color/holo_red_dark" />
 
-    <!-- Biodegradable -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Biodegradable"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/plasticLastUpdatedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last updated: --"
+            android:textSize="12sp"
+            android:layout_marginTop="2dp" />
 
-    <ProgressBar
-        android:id="@+id/biodegradableProgressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="0" />
+        <Button
+            android:id="@+id/emptyPlasticButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Empty Plastic Bin" />
 
-    <TextView
-        android:id="@+id/biodegradablePercentageTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0%" />
+        <!-- ========== Paper Bin ========== -->
+        <TextView
+            android:id="@+id/paperLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Paper Bin"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
 
+        <ProgressBar
+            android:id="@+id/paperProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:max="100"
+            android:progressTint="@android:color/holo_blue_dark" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/paperPercentageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0%"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp" />
+
+        <ImageView
+            android:id="@+id/paperWarningIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_dialog_alert"
+            android:visibility="gone"
+            android:layout_marginTop="4dp"
+            app:tint="@android:color/holo_red_dark" />
+
+        <TextView
+            android:id="@+id/paperLastUpdatedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last updated: --"
+            android:textSize="12sp"
+            android:layout_marginTop="2dp" />
+
+        <Button
+            android:id="@+id/emptyPaperButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Empty Paper Bin" />
+
+        <!-- ========== Metal Bin ========== -->
+        <TextView
+            android:id="@+id/metalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Metal Bin"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+
+        <ProgressBar
+            android:id="@+id/metalProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:max="100"
+            android:progressTint="@android:color/holo_blue_dark" />
+
+        <TextView
+            android:id="@+id/metalPercentageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0%"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp" />
+
+        <ImageView
+            android:id="@+id/metalWarningIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_dialog_alert"
+            android:visibility="gone"
+            android:layout_marginTop="4dp"
+            app:tint="@android:color/holo_red_dark" />
+
+        <TextView
+            android:id="@+id/metalLastUpdatedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last updated: --"
+            android:textSize="12sp"
+            android:layout_marginTop="2dp" />
+
+        <Button
+            android:id="@+id/emptyMetalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Empty Metal Bin" />
+
+        <!-- ========== Line Charts ========== -->
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/plasticLineChart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="16dp" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/paperLineChart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="16dp" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/metalLineChart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="16dp" />
+
+        <RadioGroup
+            android:id="@+id/timeRangeRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp">
+
+            <RadioButton
+                android:id="@+id/weeklyRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weekly"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/monthlyRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monthly" />
+        </RadioGroup>
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/weeklyBarChart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/maintenanceRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+
+</ScrollView>

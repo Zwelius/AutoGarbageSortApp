@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/team1NameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:text="Team 1" />
+
+    <TextView
+        android:id="@+id/team1ScoreTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/team2NameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:text="Team 2" />
+
+    <TextView
+        android:id="@+id/team2ScoreTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/timestampTextView"
+        android:layout_width="47dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:text="Timestamp" />
+    <TextView
+        android:id="@+id/timerSetTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:text="Timer Set" />
+</LinearLayout>

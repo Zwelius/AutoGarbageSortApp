@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import com.google.firebase.FirebaseApp;
+
 
 public class LauncherActivity extends AppCompatActivity {
 
@@ -18,6 +20,7 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher); // Set the splash screen layout
+        FirebaseApp.initializeApp(this);// Initialize Firebase on App
 
         // Delay for a short time (e.g., 2 seconds) to show the splash screen
         new Handler().postDelayed(new Runnable() {

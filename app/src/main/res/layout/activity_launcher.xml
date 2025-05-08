@@ -10,4 +10,12 @@
         android:layout_centerInParent="true"
         android:src="@drawable/app_logo" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="36sp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:text="@string/launcher_title"/>
 </RelativeLayout>

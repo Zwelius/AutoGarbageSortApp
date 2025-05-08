@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+    //id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -31,6 +33,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 }
 
@@ -47,4 +50,13 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation(libs.material.v1110)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.firestore)
+    implementation (libs.firebase.database)
+    implementation (libs.mpandroidchart)
 }

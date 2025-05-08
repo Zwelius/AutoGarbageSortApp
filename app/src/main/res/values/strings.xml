@@ -16,4 +16,25 @@
     <string name="login">Login</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="no_account_sign_up_here">No Account? Sign up Here</string>
+    <string name="default_web_client_id">472346271631-kr385viq7o182mpvjhoek2ll2gc70lh2.apps.googleusercontent.com</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="job">Job</string>
+    <string name="update">Update</string>
+    <string name="launcher_title">\n\n\n\n\n\n AutoGarbageSortApp</string>
+    <string name="metal_3_points">Metal: 3 points</string>
+    <string name="malata_2_points">Malata: 2 points</string>
+    <string name="team_1">Team 1</string>
+    <string name="team_2">Team 2</string>
+    <string name="_0">0</string>
+    <string name="_00_00">00:00</string>
+    <string name="set_timer_seconds">Set Timer (seconds)</string>
+    <string name="start_game">Start Game</string>
+    <string name="scoring_categories">Scoring Categories</string>
+    <string name="plastic_1_point">Plastic: 1 point</string>
+    <string name="no_game_history_yet">No game history yet</string>
+    <string name="history">History</string>
+    <string name="plastic_bin">Plastic Bin</string>
 </resources>

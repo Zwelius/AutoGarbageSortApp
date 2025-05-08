@@ -1,57 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignupActivity">
 
-    <EditText
-        android:id="@+id/signupUsernameEditText"
-        android:layout_width="350dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="100dp"
-        android:autofillHints=""
-        android:hint="@string/username"
-        android:inputType="text"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="325dp"
+        android:layout_height="79dp"
+        android:layout_marginTop="48dp"
+        android:text="SIGN UP"
+        android:textAlignment="center"
+        android:textSize="24pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/signupPasswordEditText"
-        android:layout_width="350dp"
+        android:id="@+id/firstNameEditText"
+        android:layout_width="325dp"
         android:layout_height="70dp"
         android:layout_marginTop="16dp"
-        android:autofillHints=""
-        android:hint="@string/password"
-        android:inputType="textPassword"
+        android:hint="First Name"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupUsernameEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/signupConfirmPasswordEditText" />
 
     <EditText
         android:id="@+id/signupConfirmPasswordEditText"
-        android:layout_width="350dp"
+        android:layout_width="325dp"
         android:layout_height="70dp"
         android:layout_marginTop="16dp"
         android:autofillHints=""
         android:hint="@string/confirm_password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signupPasswordEditText" />
+
+    <EditText
+        android:id="@+id/signupPasswordEditText"
+        android:layout_width="325dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
+        android:autofillHints=""
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signupEmailEditText" />
+
+    <EditText
+        android:id="@+id/signupEmailEditText"
+        android:layout_width="325dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="36dp"
+        android:autofillHints=""
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/jobEditText"
+        android:layout_width="325dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
+        android:hint="Job"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lastNameEditText" />
+
+    <EditText
+        android:id="@+id/lastNameEditText"
+        android:layout_width="325dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
+        android:hint="Last Name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstNameEditText" />
 
     <Button
         android:id="@+id/signupButton"
         android:layout_width="243dp"
         android:layout_height="75dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupConfirmPasswordEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/jobEditText" />
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
