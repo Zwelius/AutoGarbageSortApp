@@ -33,6 +33,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         updateNavHeader();
         createNotificationChannel();
+        firebaseCloudMessagingToken();
     }
 
     @Override
@@ -168,5 +170,20 @@ public class MainActivity extends AppCompatActivity {
                 manager.createNotificationChannel(channel);
             }
         }
+    }
+    private void firebaseCloudMessagingToken(){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w("FCM", "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+
+                    // Get new FCM registration token
+                    String token = task.getResult();
+                    Log.d("FCM Token", token);
+                    // Optionally send token to your server
+                });
+
     }
 }

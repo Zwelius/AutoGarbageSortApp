@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -12,6 +11,16 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
+        <!-- ========== Section: Bin Monitoring ========== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bin Monitoring"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="start" />
+
         <!-- ========== Plastic Bin ========== -->
         <TextView
             android:id="@+id/plasticLabel"
@@ -20,7 +29,7 @@
             android:text="Plastic Bin"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="8dp" />
 
         <ProgressBar
             android:id="@+id/plasticProgressBar"
@@ -69,7 +78,7 @@
             android:text="Paper Bin"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginTop="24dp" />
+            android:layout_marginTop="16dp" />
 
         <ProgressBar
             android:id="@+id/paperProgressBar"
@@ -118,7 +127,7 @@
             android:text="Metal Bin"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginTop="24dp" />
+            android:layout_marginTop="16dp" />
 
         <ProgressBar
             android:id="@+id/metalProgressBar"
@@ -159,24 +168,31 @@
             android:layout_height="wrap_content"
             android:text="Empty Metal Bin" />
 
-        <!-- ========== Line Charts ========== -->
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/plasticLineChart"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_margin="16dp" />
+        <!-- ========== Section: Historical Logs ========== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Historical Logs"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="start" />
 
         <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/paperLineChart"
+            android:id="@+id/combinedLineChart"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_margin="16dp" />
+            android:layout_marginTop="8dp" />
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/metalLineChart"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_margin="16dp" />
+        <!-- ========== Section: Analytics ========== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Analytics"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="start" />
 
         <RadioGroup
             android:id="@+id/timeRangeRadioGroup"
@@ -184,7 +200,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="8dp">
 
             <RadioButton
                 android:id="@+id/weeklyRadioButton"
@@ -204,16 +220,24 @@
             android:id="@+id/weeklyBarChart"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            />
+            android:layout_marginTop="8dp" />
+
+        <!-- ========== Section: Maintenance Logs ========== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Maintenance Logs"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="start" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/maintenanceRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp" />
 
     </LinearLayout>
-
 </ScrollView>

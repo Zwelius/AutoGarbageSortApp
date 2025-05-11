@@ -59,4 +59,5 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation (libs.firebase.database)
     implementation (libs.mpandroidchart)
+    implementation (libs.firebase.messaging)
 }

@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.autogarbagesortapp.NotificationHelper;
 import com.example.autogarbagesortapp.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.formatter.ValueFormatter;
@@ -62,7 +63,7 @@ public class HomeFragment extends Fragment {
     private final DatabaseReference binsRef = FirebaseDatabase.getInstance("https://autogarbagesortapp-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("bins");
     private static final int REQUEST_NOTIFICATION_PERMISSION = 1001;
-    private LineChart plasticChart, metalChart, paperChart;
+    private LineChart combinedChart;
     private RadioGroup timeRangeRadioGroup;
     private BarChart weeklyBarChart;
     private RecyclerView maintenanceRecyclerView;
@@ -96,13 +97,8 @@ public class HomeFragment extends Fragment {
         fetchBinData("metal", mMetalProgressBar, mMetalPercentage, mMetalLastUpdated, mMetalWarning);
         fetchBinData("paper", mPaperProgressBar, mPaperPercentage, mPaperLastUpdated, mPaperWarning);
 
-        plasticChart = view.findViewById(R.id.plasticLineChart);
-        metalChart = view.findViewById(R.id.metalLineChart);
-        paperChart = view.findViewById(R.id.paperLineChart);
-
-        fetchChartData("plastic", plasticChart);
-        fetchChartData("metal", metalChart);
-        fetchChartData("paper", paperChart);
+        combinedChart = view.findViewById(R.id.combinedLineChart); // Replace individual charts with one
+        fetchCombinedChartData(); // Fetch merged data
 
         timeRangeRadioGroup = view.findViewById(R.id.timeRangeRadioGroup);
         weeklyBarChart = view.findViewById(R.id.weeklyBarChart);
@@ -193,29 +189,12 @@ public class HomeFragment extends Fragment {
         lastUpdatedText.setText("Last Updated: " + timestamp);
     }
     private void sendOverflowNotification(String binType, int level) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-                ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS)
-                        != PackageManager.PERMISSION_GRANTED) {
-
-            if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                showPermissionRationale();
-            } else {
-                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_NOTIFICATION_PERMISSION);
-            }
-            return;
-        }
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), "bin_alerts")
-                .setSmallIcon(R.drawable.notif_bell)
-                .setContentTitle("Bin Overflow Alert")
-                .setContentText(binType + " bin is " + level + "% full.")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_ALARM) // This helps heads-up behavior
-                .setDefaults(NotificationCompat.DEFAULT_ALL) // Sound, vibration, lights
-                .setAutoCancel(true); // Dismiss when tapped
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(requireContext());
-        notificationManager.notify(binType.hashCode(), builder.build());
+        NotificationHelper.showNotification(
+                requireContext(),
+                "Bin Overflow Alert",
+                binType + " bin is " + level + "% full.",
+                binType.hashCode()
+        );
     }
 
 
@@ -263,65 +242,93 @@ public class HomeFragment extends Fragment {
                 .create()
                 .show();
     }
-    private void fetchChartData(String material, LineChart chart) {
+    private void fetchCombinedChartData() {
         DatabaseReference logRef = FirebaseDatabase.getInstance("https://autogarbagesortapp-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("logs");
 
-        logRef.orderByKey().limitToLast(100)
-                .addValueEventListener(new ValueEventListener() {
-                    long lastUpdate = 0;
+        logRef.orderByKey().limitToLast(7).addValueEventListener(new ValueEventListener() {
+            long lastUpdate = 0;
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 long now = System.currentTimeMillis();
-                if (now - lastUpdate < 10000) return; // throttle to 1 update every 5 seconds
+                if (now - lastUpdate < 10000) return;
                 lastUpdate = now;
-                List<Entry> entries = new ArrayList<>();
+
+                List<Entry> plasticEntries = new ArrayList<>();
+                List<Entry> metalEntries = new ArrayList<>();
+                List<Entry> paperEntries = new ArrayList<>();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                sdf.setTimeZone(java.util.TimeZone.getTimeZone("Asia/Manila"));
 
                 for (DataSnapshot dateSnapshot : snapshot.getChildren()) {
-                    String dateKey = dateSnapshot.getKey(); // e.g. "2025-04-29"
-                    DataSnapshot materialSnapshot = dateSnapshot.child(material);
+                    String dateKey = dateSnapshot.getKey();
+                    for (String material : new String[]{"plastic", "metal", "paper"}) {
+                        DataSnapshot materialSnapshot = dateSnapshot.child(material);
+                        for (DataSnapshot timeSnapshot : materialSnapshot.getChildren()) {
+                            String timeKey = timeSnapshot.getKey();
+                            Long value = timeSnapshot.getValue(Long.class);
 
-                    for (DataSnapshot timeSnapshot : materialSnapshot.getChildren()) {
-                        String timeKey = timeSnapshot.getKey(); // e.g. "16:51:43"
-                        Long value = timeSnapshot.getValue(Long.class);
-
-                        if (value != null) {
-                            String fullDateTime = dateKey + " " + timeKey;
-                            try {
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-                                sdf.setTimeZone(java.util.TimeZone.getTimeZone("Asia/Manila"));
-                                Date date = sdf.parse(fullDateTime);
-                                if (date != null) {
-                                    long timestamp = date.getTime();
-                                    entries.add(new Entry(timestamp, value));
+                            if (value != null) {
+                                try {
+                                    Date date = sdf.parse(dateKey + " " + timeKey);
+                                    if (date != null) {
+                                        long timestamp = date.getTime();
+                                        Entry entry = new Entry(timestamp, value);
+                                        switch (material) {
+                                            case "plastic":
+                                                plasticEntries.add(entry);
+                                                break;
+                                            case "metal":
+                                                metalEntries.add(entry);
+                                                break;
+                                            case "paper":
+                                                paperEntries.add(entry);
+                                                break;
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
                             }
                         }
                     }
                 }
 
-                if (entries.isEmpty()) {
-                    Log.d("ChartData", "No data available for " + material);
-                    return;
-                }
+                // Sort and limit to latest 20 entries
+                plasticEntries.sort((a, b) -> Long.compare((long) a.getX(), (long) b.getX()));
+                metalEntries.sort((a, b) -> Long.compare((long) a.getX(), (long) b.getX()));
+                paperEntries.sort((a, b) -> Long.compare((long) a.getX(), (long) b.getX()));
 
-                LineDataSet dataSet = new LineDataSet(entries, material + " levels");
-                dataSet.setColor(Color.BLUE);
-                dataSet.setDrawCircles(true);
-                dataSet.setDrawValues(false);
+                if (plasticEntries.size() > 20) plasticEntries = plasticEntries.subList(plasticEntries.size() - 20, plasticEntries.size());
+                if (metalEntries.size() > 20) metalEntries = metalEntries.subList(metalEntries.size() - 20, metalEntries.size());
+                if (paperEntries.size() > 20) paperEntries = paperEntries.subList(paperEntries.size() - 20, paperEntries.size());
 
-                LineData lineData = new LineData(dataSet);
-                chart.setData(lineData);
+                LineDataSet plasticDataSet = new LineDataSet(plasticEntries, "Plastic");
+                plasticDataSet.setColor(Color.BLUE);
+                plasticDataSet.setCircleColor(Color.BLUE);
 
-                // Format X-axis
-                XAxis xAxis = chart.getXAxis();
+                LineDataSet metalDataSet = new LineDataSet(metalEntries, "Metal");
+                metalDataSet.setColor(Color.GRAY);
+                metalDataSet.setCircleColor(Color.GRAY);
+
+                LineDataSet paperDataSet = new LineDataSet(paperEntries, "Paper");
+                paperDataSet.setColor(Color.GREEN);
+                paperDataSet.setCircleColor(Color.GREEN);
+
+                plasticDataSet.setDrawValues(false);
+                metalDataSet.setDrawValues(false);
+                paperDataSet.setDrawValues(false);
+
+                LineData lineData = new LineData(plasticDataSet, metalDataSet, paperDataSet);
+                combinedChart.setData(lineData);
+
+                // Format X-Axis
+                XAxis xAxis = combinedChart.getXAxis();
                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                xAxis.setGranularity(1f); // only show 1 label per "step"
-                //xAxis.setLabelRotationAngle(-45f); // rotate for readability
-                xAxis.setLabelCount(4, true); // force fewer labels
-
+                xAxis.setGranularity(1f);
+                xAxis.setLabelCount(5, true);
                 xAxis.setValueFormatter(new ValueFormatter() {
                     private final SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm", Locale.getDefault());
 
@@ -331,19 +338,16 @@ public class HomeFragment extends Fragment {
                     }
                 });
 
-                //chart.setVisibleXRangeMaximum(10);
-                chart.getAxisRight().setEnabled(false); // hide right axis
-                chart.getDescription().setEnabled(false); // remove description
-                chart.getLegend().setTextSize(12f); // resize legend if needed
-                chart.setExtraBottomOffset(10f); // prevent label cutoff
-                chart.getDescription().setText(material + " Bin Fill Levels Over Time");
-                chart.invalidate();
-
+                combinedChart.getAxisRight().setEnabled(false);
+                combinedChart.getDescription().setEnabled(false);
+                combinedChart.getLegend().setTextSize(12f);
+                combinedChart.setExtraBottomOffset(10f);
+                combinedChart.invalidate();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("ChartData", "Error fetching " + material + " data: " + error.getMessage());
+                Log.e("ChartData", "Error fetching data: " + error.getMessage());
             }
         });
     }
