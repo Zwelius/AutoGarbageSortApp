@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "472346271631",
+    "project_id": "autogarbagesortapp",
+    "storage_bucket": "autogarbagesortapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472346271631:android:de6d8fee7204286978f5fa",
+        "android_client_info": {
+          "package_name": "com.example.autogarbagesortapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIiT_qb0vzNDMBJQHPkKQwwJMlk1V0BW0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
